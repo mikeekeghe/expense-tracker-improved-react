@@ -25,7 +25,7 @@ function Item({ title }) {
   );
 }
 
-class EventList extends Component {
+class ExpenseList extends Component {
   render() {
     return (
       <FlatList
@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16
+    padding: 10,
+    marginVertical: 4,
+    marginHorizontal: 8
   },
   title: {
     fontSize: 16
   }
 });
-export default EventList;
+export default ExpenseList;

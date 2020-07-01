@@ -3,16 +3,22 @@ import { StyleSheet } from "react-native";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
+import ExpenseForm from "../components/custom/ExpenseForm.tsx";
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1
+      }}
+    >
       <Text style={styles.title}>New Transaction</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
+      <ExpenseForm />
     </View>
   );
 }

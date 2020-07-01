@@ -3,8 +3,7 @@ import { StyleSheet } from "react-native";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
-import EventList from "../components/custom/EventList";
-import Expense from "../components/custom/Expense";
+import ExpenseList from "../components/custom/ExpenseList.tsx";
 
 export default function TabOneScreen() {
   return (
@@ -15,8 +14,8 @@ export default function TabOneScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EventList />
       <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+      <ExpenseList />
     </View>
   );
 }

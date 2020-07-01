@@ -6,7 +6,6 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
-import EventList from "components/custom/EventList";
 import Expense from "components/custom/Expense";
 
 export default function App() {
