@@ -31,11 +31,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    marginTop: 20,
+    marginLeft: 20,
     fontWeight: "bold"
   },
   separator: {
     marginVertical: 30,
     height: 1,
+    marginLeft: 20,
     width: "80%"
   }
 });

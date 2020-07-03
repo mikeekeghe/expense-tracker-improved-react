@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
+import { getEvents } from "./utilities";
 
 const DATA = [
   {
