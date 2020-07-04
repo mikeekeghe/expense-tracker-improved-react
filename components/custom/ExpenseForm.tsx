@@ -12,6 +12,13 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import { formatDateTime } from "./utilities";
 
 class ExpenseForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: null
+    };
+  }
+
   state = {
     title: null,
     description: null,
@@ -27,6 +34,23 @@ class ExpenseForm extends Component {
 
   handlaAddPress = () => {
     console.log(this.state);
+    return fetch("https://techlinegroup.com/expense/api/add.php", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({})
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.users
+        });
+      })
+
+      .catch(error => console.log(error));
   };
 
   handleChangeTitle = value => {

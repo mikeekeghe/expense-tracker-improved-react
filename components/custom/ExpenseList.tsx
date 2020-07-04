@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { FlatList, Text, View, StyleSheet } from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator
+} from "react-native";
 import Constants from "expo-constants";
-import { getEvents } from "./utilities";
 
-const DATA = [
+const STATIC_DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "First Item"
@@ -27,14 +32,45 @@ function Item({ title }) {
 }
 
 class ExpenseList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      dataSource: null
+    };
+  }
+
+  componentDidMount() {
+    return fetch("https://techlinegroup.com/expense/api/get_all.php")
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.users
+        });
+      })
+
+      .catch(error => console.log(error));
+  }
+
   render() {
-    return (
-      <FlatList
-        data={DATA}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtractor={item => item.id}
-      />
-    );
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
+      );
+    } else {
+      let myExpenses = this.state.dataSource.map((val, key) => {
+        return (
+          <View key={key} style={styles.item}>
+            <Text>{val.title}</Text>
+          </View>
+        );
+      });
+
+      return <View style={styles.container}>{myExpenses}</View>;
+    }
   }
 }
 

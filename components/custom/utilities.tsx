@@ -1,13 +1,5 @@
 import moment from "moment";
 
-const url = "https://techlinegroup.com/expense/api/get_all.php";
-
-export function getEvents() {
-  return fetch(url)
-    .then(response => response.json())
-    .then(users => users.map(e => ({ e })));
-}
-
 export function formatDate(dateString) {
   const parsed = moment(new Date(dateString));
 
