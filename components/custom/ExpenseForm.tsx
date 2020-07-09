@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   StyleSheet,
+  KeyboardAvoidingView,
   Picker,
   Text
 } from "react-native";
@@ -33,23 +34,24 @@ class ExpenseForm extends Component {
   };
 
   handlaAddPress = () => {
-    console.log(this.state);
-    return fetch("https://techlinegroup.com/expense/api/add.php", {
+    console.log("aaaaaaaaaaaaaaaaaa", this.state);
+    return fetch("https://techlinegroup.com/expense/api/add_exp.php", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({
+        user_id: "default",
+        title: this.state.title,
+        amount: this.state.amount,
+        description: "",
+        category: this.state.category,
+        subcategory: "",
+        date_time: formatDateTime(this.state.thedatetime)
+      })
     })
       .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.users
-        });
-      })
-
       .catch(error => console.log(error));
   };
 
@@ -88,78 +90,89 @@ class ExpenseForm extends Component {
           flex: 1
         }}
       >
-        <View style={styles.fieldContainer}>
-          <TextInput
-            style={styles.text}
-            placeholder="Expense Title"
-            spellCheck={false}
-            value={this.state.title}
-            onChangeText={this.handleChangeTitle}
-          />
-        </View>
-        <View style={styles.fieldContainer}>
-          <TextInput
-            style={styles.text}
-            placeholder="Amount"
-            spellCheck={false}
-            value={this.state.amount}
-            keyboardType={"numeric"}
-            onChangeText={this.handleChangeAmount}
-          />
-        </View>
-        <View style={styles.fieldContainer}>
-          <TextInput
-            style={[styles.text, styles.borderTop]}
-            placeholder="Event date"
-            spellCheck={false}
-            editable={!this.state.showDatePicker}
-            onFocus={this.handleDatePress}
-            value={formatDateTime(this.state.thedatetime)}
-          />
-          <DateTimePicker
-            isVisible={this.state.showDatePicker}
-            mode="datetime"
-            onConfirm={this.handleDatePicked}
-            onCancel={this.handleDatePickerHide}
-          />
-        </View>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={this.state.category}
-            style={{ height: 50, width: 200 }}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({ category: itemValue })
-            }
-          >
-            <Picker.Item label="--Select One--" value="--Select One--" />
-            <Picker.Item label="Automobile" value="Automobile" />
-            <Picker.Item label="Clothing" value="Clothing" />
-            <Picker.Item label="Debt Reduction" value="Debt Reduction" />
-            <Picker.Item label="Education" value="Education" />
-            <Picker.Item label="Entertainment/Fun" value="Entertainment/Fun" />
-            <Picker.Item label="Family" value="Family" />
-            <Picker.Item label="Food" value="Food" />
-            <Picker.Item label="Gifts" value="Gifts" />
-            <Picker.Item label="Giving" value="Giving" />
-            <Picker.Item
-              label="Household Items/Supplies"
-              value="Household Items/Supplies"
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
+          <View style={styles.fieldContainer}>
+            <TextInput
+              style={styles.text}
+              placeholder="Expense Title"
+              spellCheck={false}
+              value={this.state.title}
+              onChangeText={this.handleChangeTitle}
             />
-            <Picker.Item label="Insurance" value="Insurance" />
-            <Picker.Item label="Investments" value="Investments" />
-            <Picker.Item label="Maintenance" value="Maintenance" />
-            <Picker.Item label="Medical" value="Medical" />
-            <Picker.Item label="Personal" value="Personal" />
-            <Picker.Item label="Shelter/Home" value="Shelter/Home" />
-            <Picker.Item label="Training" value="Training" />
-            <Picker.Item label="Transportation" value="Transportation" />
-            <Picker.Item label="Travel/Vacations" value="Travel/Vacations" />
-            <Picker.Item label="Utilities" value="Utilities" />
-          </Picker>
-        </View>
-        <TouchableHighlight onPress={this.handleAddPress} style={styles.button}>
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableHighlight>
+          </View>
+          <View style={styles.fieldContainer}>
+            <TextInput
+              style={styles.text}
+              placeholder="Amount"
+              spellCheck={false}
+              value={this.state.amount}
+              keyboardType={"numeric"}
+              onChangeText={this.handleChangeAmount}
+            />
+          </View>
+          <View style={styles.fieldContainer}>
+            <TextInput
+              style={[styles.text, styles.borderTop]}
+              placeholder="Event date"
+              spellCheck={false}
+              editable={!this.state.showDatePicker}
+              onFocus={this.handleDatePress}
+              value={formatDateTime(this.state.thedatetime)}
+            />
+            <DateTimePicker
+              isVisible={this.state.showDatePicker}
+              mode="datetime"
+              onConfirm={this.handleDatePicked}
+              onCancel={this.handleDatePickerHide}
+            />
+          </View>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={this.state.category}
+              style={{ height: 50, width: 200 }}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ category: itemValue })
+              }
+            >
+              <Picker.Item label="--Select One--" value="--Select One--" />
+              <Picker.Item label="Automobile" value="Automobile" />
+              <Picker.Item label="Clothing" value="Clothing" />
+              <Picker.Item label="Debt Reduction" value="Debt Reduction" />
+              <Picker.Item label="Education" value="Education" />
+              <Picker.Item
+                label="Entertainment/Fun"
+                value="Entertainment/Fun"
+              />
+              <Picker.Item label="Family" value="Family" />
+              <Picker.Item label="Food" value="Food" />
+              <Picker.Item label="Gifts" value="Gifts" />
+              <Picker.Item label="Giving" value="Giving" />
+              <Picker.Item
+                label="Household Items/Supplies"
+                value="Household Items/Supplies"
+              />
+              <Picker.Item label="Insurance" value="Insurance" />
+              <Picker.Item label="Investments" value="Investments" />
+              <Picker.Item label="Maintenance" value="Maintenance" />
+              <Picker.Item label="Medical" value="Medical" />
+              <Picker.Item label="Personal" value="Personal" />
+              <Picker.Item label="Shelter/Home" value="Shelter/Home" />
+              <Picker.Item label="Training" value="Training" />
+              <Picker.Item label="Transportation" value="Transportation" />
+              <Picker.Item label="Travel/Vacations" value="Travel/Vacations" />
+              <Picker.Item label="Utilities" value="Utilities" />
+            </Picker>
+          </View>
+          <TouchableHighlight
+            onPress={this.handleAddPress}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableHighlight>
+        </KeyboardAvoidingView>
       </View>
     );
   }
