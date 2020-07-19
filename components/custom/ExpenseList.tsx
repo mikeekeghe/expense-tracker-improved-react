@@ -4,24 +4,10 @@ import {
   Text,
   View,
   StyleSheet,
+  ScrollView,
   ActivityIndicator
 } from "react-native";
 import Constants from "expo-constants";
-
-const STATIC_DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item"
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item"
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item"
-  }
-];
 
 function Item({ title }) {
   return (
@@ -63,10 +49,13 @@ class ExpenseList extends Component {
     } else {
       let myExpenses = this.state.dataSource.map((val, key) => {
         return (
-          <View key={key} style={styles.item}>
-            <Text>{val.title}</Text>
-            <Text>{val.amoun}</Text>
-          </View>
+          <ScrollView style={styles.scrollView}>
+            <View key={key} style={styles.item}>
+              <Text>
+                {val.title} {val.amount}
+              </Text>
+            </View>
+          </ScrollView>
         );
       });
 
@@ -78,7 +67,8 @@ class ExpenseList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight,
+    width: 250
   },
   item: {
     backgroundColor: "#f9c2ff",
@@ -88,6 +78,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16
+  },
+  scrollView: {
+    backgroundColor: "pink",
+    marginHorizontal: 20
   }
 });
 export default ExpenseList;
