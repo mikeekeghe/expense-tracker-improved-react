@@ -46,7 +46,7 @@ class ExpenseList extends Component {
       .then(responseJson => {
         this.setState({
           isLoading: false,
-          dataSource: responseJson.users
+          dataSource: responseJson.items
         });
       })
 
@@ -65,6 +65,7 @@ class ExpenseList extends Component {
         return (
           <View key={key} style={styles.item}>
             <Text>{val.title}</Text>
+            <Text>{val.amoun}</Text>
           </View>
         );
       });

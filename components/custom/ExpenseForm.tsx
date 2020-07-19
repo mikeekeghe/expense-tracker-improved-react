@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useState } from "react";
 
 import {
   TouchableHighlight,
@@ -7,61 +8,62 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Picker,
+  Button,
+  Alert,
   Text
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { formatDateTime } from "./utilities";
 
+const createStartedAddingAlert = () =>
+  Alert.alert(
+    "Started Adding",
+    "Succesfully started Adding",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        onPress: () => console.log("ssssssssssssssssssss started adding>>>>>> ")
+      }
+    ],
+    { cancelable: false }
+  );
+
+const createFinishedAddingAlert = () =>
+  Alert.alert(
+    "Finished Adding",
+    "Succesfully finished Adding",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        onPress: () => console.log("ffffffffffffffff finished adding>>>>>> ")
+      }
+    ],
+    { cancelable: false }
+  );
+
 class ExpenseForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: null
+      dataSource: "",
+      title: "",
+      description: "",
+      category: "--Select One--",
+      subcategory: "",
+      thedatetime: "",
+      amount: 0
     };
   }
-
-  state = {
-    title: null,
-    description: null,
-    category: "",
-    subcategory: "",
-    thedatetime: "",
-    amount: 0
-  };
-
-  state = {
-    category: "--Select One--"
-  };
-
-  handlaAddPress = () => {
-    console.log("aaaaaaaaaaaaaaaaaa", this.state);
-    return fetch("https://techlinegroup.com/expense/api/add_exp.php", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id: "default",
-        title: this.state.title,
-        amount: this.state.amount,
-        description: "",
-        category: this.state.category,
-        subcategory: "",
-        date_time: formatDateTime(this.state.thedatetime)
-      })
-    })
-      .then(response => response.json())
-      .catch(error => console.log(error));
-  };
-
-  handleChangeTitle = value => {
-    this.setState({ title: value });
-  };
-
-  handleChangeAmount = value => {
-    this.setState({ amount: value });
-  };
 
   handleDatePicked = thedatetime => {
     this.setState({
@@ -83,6 +85,51 @@ class ExpenseForm extends Component {
     });
   };
 
+  updateValue(text, fields) {
+    if (fields == "title") {
+      this.setState({
+        title: text
+      });
+    } else if (fields == "amount") {
+      this.setState({
+        amount: text
+      });
+    }
+  }
+  submit = () => {
+    let formData = new FormData();
+    // let collection = {};
+    formData.append("title", this.state.title);
+    formData.append("amount", this.state.amount);
+    formData.append("category", this.state.category);
+    formData.append("date_time", this.state.thedatetime);
+
+    console.warn(formData);
+
+    // collection.title = this.state.title;
+    // collection.amount = this.state.amount;
+    // collection.category = this.state.category;
+    // collection.date_time = this.state.thedatetime;
+    //
+    // console.warn(collection);
+
+    fetch("https://techlinegroup.com/expense/api/add_exp.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data."
+      },
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      }),
+      createFinishedAddingAlert();
+  };
+
   render() {
     return (
       <View
@@ -99,8 +146,7 @@ class ExpenseForm extends Component {
               style={styles.text}
               placeholder="Expense Title"
               spellCheck={false}
-              value={this.state.title}
-              onChangeText={this.handleChangeTitle}
+              onChangeText={text => this.updateValue(text, "title")}
             />
           </View>
           <View style={styles.fieldContainer}>
@@ -108,9 +154,8 @@ class ExpenseForm extends Component {
               style={styles.text}
               placeholder="Amount"
               spellCheck={false}
-              value={this.state.amount}
               keyboardType={"numeric"}
-              onChangeText={this.handleChangeAmount}
+              onChangeText={text => this.updateValue(text, "amount")}
             />
           </View>
           <View style={styles.fieldContainer}>
@@ -166,10 +211,7 @@ class ExpenseForm extends Component {
               <Picker.Item label="Utilities" value="Utilities" />
             </Picker>
           </View>
-          <TouchableHighlight
-            onPress={this.handleAddPress}
-            style={styles.button}
-          >
+          <TouchableHighlight onPress={this.submit} style={styles.button}>
             <Text style={styles.buttonText}>Add</Text>
           </TouchableHighlight>
         </KeyboardAvoidingView>
