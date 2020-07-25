@@ -15,8 +15,7 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={ExpenseList} />
-      <Stack.Screen name="NewTransaction" component={ExpenseForm} />
+      <Stack.Screen name="This Weeks" component={ReportsList} />
     </Stack.Navigator>
   );
 }
@@ -29,7 +28,7 @@ function Item({ title }) {
   );
 }
 
-class ExpenseList extends Component {
+class ReportsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +38,7 @@ class ExpenseList extends Component {
   }
 
   componentDidMount() {
-    return fetch("https://techlinegroup.com/expense/api/get_all.php")
+    return fetch("https://techlinegroup.com/expense/api/get_thiswek_report.php")
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
@@ -62,9 +61,8 @@ class ExpenseList extends Component {
       let myExpenses = this.state.dataSource.map((val, key) => {
         return (
           <View key={key} style={styles.item}>
-            <Text>
-              {val.title} {val.amount}
-            </Text>
+            <Text>This Week's Report :</Text>
+            <Text>{val.sum}</Text>
           </View>
         );
       });
@@ -93,4 +91,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 20
   }
 });
-export default ExpenseList;
+export default ReportsList;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
@@ -15,7 +15,9 @@ export default function TabOneScreen() {
         darkColor="rgba(255,255,255,0.1)"
       />
       <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-      <ExpenseList />
+      <ScrollView style={styles.scrollView}>
+        <ExpenseList />
+      </ScrollView>
     </View>
   );
 }
@@ -27,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   title: {
+    marginTop: 20,
     fontSize: 20,
     fontWeight: "bold"
   },

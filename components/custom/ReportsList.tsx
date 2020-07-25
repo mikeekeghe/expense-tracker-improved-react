@@ -15,8 +15,7 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={ExpenseList} />
-      <Stack.Screen name="NewTransaction" component={ExpenseForm} />
+      <Stack.Screen name="All Reports" component={ReportsList} />
     </Stack.Navigator>
   );
 }
@@ -29,7 +28,7 @@ function Item({ title }) {
   );
 }
 
-class ExpenseList extends Component {
+class ReportsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,4 +92,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 20
   }
 });
-export default ExpenseList;
+export default ReportsList;

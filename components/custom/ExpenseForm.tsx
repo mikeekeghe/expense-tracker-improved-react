@@ -15,10 +15,10 @@ import {
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { formatDateTime } from "./utilities";
 
-const createStartedAddingAlert = () =>
+const createSomethingsMissingAlert = () =>
   Alert.alert(
-    "Started Adding",
-    "Succesfully started Adding",
+    "Something is Missing",
+    "Please Entyer Required Field Data",
     [
       {
         text: "Cancel",
@@ -27,7 +27,7 @@ const createStartedAddingAlert = () =>
       },
       {
         text: "OK",
-        onPress: () => console.log("ssssssssssssssssssss started adding>>>>>> ")
+        onPress: () => console.log("<<<<< Somethings Missing>>>>>> ")
       }
     ],
     { cancelable: false }
@@ -97,37 +97,46 @@ class ExpenseForm extends Component {
     }
   }
   submit = () => {
-    let formData = new FormData();
-    // let collection = {};
-    formData.append("title", this.state.title);
-    formData.append("amount", this.state.amount);
-    formData.append("category", this.state.category);
-    formData.append("date_time", this.state.thedatetime);
+    if (
+      isEmpty(this.state.title) ||
+      isEmpty(this.state.amount) ||
+      isEmpty(this.state.thedatetime)
+    ) {
+      createSomethingsMissingAlert();
+    } else {
+      let formData = new FormData();
+      // let collection = {};
+      formData.append("title", this.state.title);
+      formData.append("amount", this.state.amount);
+      formData.append("category", this.state.category);
+      formData.append("date_time", this.state.thedatetime);
 
-    console.warn(formData);
-
-    // collection.title = this.state.title;
-    // collection.amount = this.state.amount;
-    // collection.category = this.state.category;
-    // collection.date_time = this.state.thedatetime;
-    //
-    // console.warn(collection);
-
-    fetch("https://techlinegroup.com/expense/api/add_exp.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data."
-      },
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Success:", data);
+      console.warn(formData);
+      fetch("https://techlinegroup.com/expense/api/add_exp.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data."
+        },
+        body: formData
       })
-      .catch(error => {
-        console.error("Error:", error);
-      }),
+        .then(response => response.json())
+        .then(data => {
+          console.log("Success:", data);
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        }),
+        this.setState({
+          dataSource: "",
+          title: "",
+          description: "",
+          category: "--Select One--",
+          subcategory: "",
+          thedatetime: "",
+          amount: 0
+        });
       createFinishedAddingAlert();
+    }
   };
 
   render() {
@@ -146,6 +155,8 @@ class ExpenseForm extends Component {
               style={styles.text}
               placeholder="Expense Title"
               spellCheck={false}
+              name="myTitle"
+              value={this.state.title}
               onChangeText={text => this.updateValue(text, "title")}
             />
           </View>
@@ -155,6 +166,8 @@ class ExpenseForm extends Component {
               placeholder="Amount"
               spellCheck={false}
               keyboardType={"numeric"}
+              name="myAmount"
+              value={this.state.amount}
               onChangeText={text => this.updateValue(text, "amount")}
             />
           </View>
@@ -258,4 +271,8 @@ const styles = StyleSheet.create({
   }
 });
 
+function isEmpty(obj) {
+  return obj.length === 0;
+}
+function nulifyAll() {}
 export default ExpenseForm;
