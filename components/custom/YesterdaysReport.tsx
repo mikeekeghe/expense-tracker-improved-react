@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import { createStackNavigator } from "@react-navigation/stack";
+import { toCommaAmount } from "./utilities";
 
 const Stack = createStackNavigator();
 
@@ -61,8 +62,7 @@ class ReportsList extends Component {
       let myExpenses = this.state.dataSource.map((val, key) => {
         return (
           <View key={key} style={styles.item}>
-            <Text>Yesterdays Report :</Text>
-            <Text>{val.sum}</Text>
+            <Text>Yesterdays Expenses : {toCommaAmount(val.sum)}</Text>
           </View>
         );
       });
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
-    width: 250
+    width: 300
   },
   item: {
     backgroundColor: "#f9c2ff",

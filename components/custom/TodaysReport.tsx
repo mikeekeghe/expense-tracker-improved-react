@@ -62,8 +62,7 @@ class ReportsList extends Component {
       let myExpenses = this.state.dataSource.map((val, key) => {
         return (
           <View key={key} style={styles.item}>
-            <Text>Todays Report :</Text>
-            <Text>{val.sum}</Text>
+            <Text>Todays Expenses : {toCommaAmount(val.sum)}</Text>
           </View>
         );
       });
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
-    width: 250
+    width: 300
   },
   item: {
     backgroundColor: "#f9c2ff",

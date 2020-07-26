@@ -32,104 +32,157 @@ export function getCountdownParts(eventDate) {
   };
 }
 
-export function toCommaAmount(strTotal) {
-  let strLen = strTotal.length();
-  console.log("strLen >>", strLen);
-  let builder = "";
-  let newamt = "";
-  // Initialize StringBuilder with this value.
-  if (strTotal.contains(".")) {
-    strLen = strLen - 3;
-    if (strLen < 4) {
-      newamt = strTotal;
-    }
-
-    if (strLen == 4) {
-      builder.insert(1, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 5) {
-      builder.insert(2, ",");
-      newamt = builder.toString();
-    }
-
-    if (strLen == 6) {
-      builder.insert(3, ",");
-      newamt = builder.toString();
-    }
-
-    if (strLen == 7) {
-      builder.insert(4, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 8) {
-      builder.insert(2, ",");
-      builder.insert(6, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 9) {
-      builder.insert(3, ",");
-      builder.insert(7, ",");
-      newamt = builder.toString();
-    }
-
-    if (strLen == 10) {
-      builder.insert(4, ",");
-      builder.insert(8, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 11) {
-      builder.insert(2, ",");
-      builder.insert(6, ",");
-      builder.insert(9, ",");
-      newamt = builder.toString();
-    }
+export function toCommaAmount(strOrig) {
+  console.log("<<<<<<<<<<<INSIDE TO COMMA AMOUNT >>>>>>>>>>>>>");
+  if (strOrig === null) {
+    console.log("<<<<<<<<<<<strOrig IS NULLLLLLLL >>>>>>>>");
   } else {
-    if (strLen < 4) {
-      newamt = strTotal;
+    let strLen = strOrig.length;
+    console.log("strLen >>", strLen);
+    let builder = "";
+    let newamt = "";
+    // Initialize StringBuilder with this value.
+    if (strOrig.includes(".")) {
+      strLen = strLen - 3;
+      if (strLen < 4) {
+        newamt = strOrig;
+      }
+
+      if (strLen == 4) {
+        builder = strOrig.slice(0, 1) + "," + strOrig.slice(1, strLen);
+        newamt = builder;
+      }
+      if (strLen == 5) {
+        builder = strOrig.slice(0, 2) + "," + strOrig.slice(2, strLen);
+        newamt = builder;
+      }
+
+      if (strLen == 6) {
+        builder = strOrig.slice(0, 3) + "," + strOrig.slice(3, strLen);
+        newamt = builder;
+      }
+
+      if (strLen == 7) {
+        builder =
+          strOrig.slice(0, 1) +
+          "," +
+          strOrig.slice(1, 5) +
+          "," +
+          strOrig.slice(4, strLen);
+        newamt = builder;
+      }
+      if (strLen == 8) {
+        builder =
+          strOrig.slice(0, 2) +
+          "," +
+          strOrig.slice(2, 6) +
+          "," +
+          strOrig.slice(5, strLen);
+        newamt = builder;
+      }
+      if (strLen == 9) {
+        builder =
+          strOrig.slice(0, 3) +
+          "," +
+          strOrig.slice(3, 7) +
+          "," +
+          strOrig.slice(6, strLen);
+        newamt = builder;
+      }
+
+      if (strLen == 10) {
+        builder =
+          strOrig.slice(0, 1) +
+          "," +
+          strOrig.slice(1, 5) +
+          "," +
+          strOrig.slice(4, 8) +
+          "," +
+          strOrig.slice(7, strLen);
+        newamt = builder;
+      }
+      if (strLen == 11) {
+        builder =
+          strOrig.slice(0, 2) +
+          "," +
+          strOrig.slice(2, 6) +
+          "," +
+          strOrig.slice(5, 9) +
+          "," +
+          strOrig.slice(8, strLen);
+        newamt = builder;
+      }
+    } else {
+      if (strLen < 4) {
+        newamt = strOrig;
+      }
+
+      if (strLen == 4) {
+        builder = strOrig.slice(0, 1) + "," + strOrig.slice(1, strLen);
+        newamt = builder;
+      }
+      if (strLen == 5) {
+        builder = strOrig.slice(0, 2) + "," + strOrig.slice(2, strLen);
+        newamt = builder;
+      }
+
+      if (strLen == 6) {
+        builder = strOrig.slice(0, 3) + "," + strOrig.slice(3, strLen);
+        newamt = builder;
+      }
+
+      if (strLen == 7) {
+        builder =
+          strOrig.slice(0, 1) +
+          "," +
+          strOrig.slice(1, 5) +
+          "," +
+          strOrig.slice(4, strLen);
+        newamt = builder;
+      }
+      if (strLen == 8) {
+        builder =
+          strOrig.slice(0, 2) +
+          "," +
+          strOrig.slice(2, 6) +
+          "," +
+          strOrig.slice(5, strLen);
+        newamt = builder;
+      }
+      if (strLen == 9) {
+        builder =
+          strOrig.slice(0, 3) +
+          "," +
+          strOrig.slice(3, 7) +
+          "," +
+          strOrig.slice(6, strLen);
+        newamt = builder;
+      }
+
+      if (strLen == 10) {
+        builder =
+          strOrig.slice(0, 1) +
+          "," +
+          strOrig.slice(1, 5) +
+          "," +
+          strOrig.slice(4, 8) +
+          "," +
+          strOrig.slice(7, strLen);
+        newamt = builder;
+      }
+      if (strLen == 11) {
+        builder =
+          strOrig.slice(0, 2) +
+          "," +
+          strOrig.slice(2, 6) +
+          "," +
+          strOrig.slice(5, 9) +
+          "," +
+          strOrig.slice(8, strLen);
+        newamt = builder;
+      }
     }
 
-    if (strLen == 4) {
-      builder.insert(1, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 5) {
-      builder.insert(2, ",");
-      newamt = builder.toString();
-    }
-
-    if (strLen == 6) {
-      builder.insert(3, ",");
-      newamt = builder.toString();
-    }
-
-    if (strLen == 7) {
-      builder.insert(4, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 8) {
-      builder.insert(2, ",");
-      builder.insert(6, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 9) {
-      builder.insert(3, ",");
-      builder.insert(7, ",");
-      newamt = builder.toString();
-    }
-
-    if (strLen == 10) {
-      builder.insert(4, ",");
-      builder.insert(8, ",");
-      newamt = builder.toString();
-    }
-    if (strLen == 11) {
-      builder.insert(2, ",");
-      builder.insert(6, ",");
-      builder.insert(9, ",");
-      newamt = builder.toString();
-    }
+    return "N" + newamt;
   }
-
-  return newamt;
 }

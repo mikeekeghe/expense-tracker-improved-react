@@ -21,11 +21,6 @@ const createSomethingsMissingAlert = () =>
     "Please Entyer Required Field Data",
     [
       {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      {
         text: "OK",
         onPress: () => console.log("<<<<< Somethings Missing>>>>>> ")
       }
@@ -38,11 +33,6 @@ const createFinishedAddingAlert = () =>
     "Finished Adding",
     "Succesfully finished Adding",
     [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
       {
         text: "OK",
         onPress: () => console.log("ffffffffffffffff finished adding>>>>>> ")
@@ -100,7 +90,8 @@ class ExpenseForm extends Component {
     if (
       isEmpty(this.state.title) ||
       isEmpty(this.state.amount) ||
-      isEmpty(this.state.thedatetime)
+      isEmpty(this.state.thedatetime) ||
+      this.state.category == "--Select One--"
     ) {
       createSomethingsMissingAlert();
     } else {
@@ -111,7 +102,7 @@ class ExpenseForm extends Component {
       formData.append("category", this.state.category);
       formData.append("date_time", this.state.thedatetime);
 
-      console.warn(formData);
+      console.log(formData);
       fetch("https://techlinegroup.com/expense/api/add_exp.php", {
         method: "POST",
         headers: {

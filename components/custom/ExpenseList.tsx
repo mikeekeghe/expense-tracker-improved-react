@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import { createStackNavigator } from "@react-navigation/stack";
+import { toCommaAmount } from "./utilities";
 
 const Stack = createStackNavigator();
 
@@ -63,8 +64,9 @@ class ExpenseList extends Component {
         return (
           <View key={key} style={styles.item}>
             <Text>
-              {val.title} {val.amount}
+              {val.title} {toCommaAmount(val.amount)}
             </Text>
+            <Text>{val.date_time}</Text>
           </View>
         );
       });
